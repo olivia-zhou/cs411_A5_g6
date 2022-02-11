@@ -1,0 +1,9 @@
+Idea one: 
+To Walk or Not:
+api: google maps and weather data
+database stores data from both
+makes recommendation depending on google maps traffic data and current weather data to decide whether
+3rd party authentication = google sign in
+it's going to be a nice walk or not
+
+Idea two:
