@@ -1,0 +1,21 @@
+Project Proposal:
+Section A5, Group 6
+Bryce Freeman, ZiZhuang Guo, Nathan Ho, Justin Sayah, Yvonne Wu, Olivia Zhou
+
+
+Link to Repository: https://github.com/olivia-zhou/cs411_A5_g6
+
+Idea One: To Walk or Not
+
+The weather in Boston is highly unpredictable and the worst feeling is trudging across town while it’s raining sideways. That’s why, using the NOAA weather data API (https://www.weather.gov/documentation/services-web-api) and Google Maps directions API (https://developers.google.com/maps/documentation/directions), we’re planning to build a web app that helps users decide whether or not it is worth it to walk somewhere by returning a “niceness of the walk” level, rated from 1 to 10. Users will login using their Google accounts for 3rd party authentication, and the database will store the data pulled from the two APIs and the calculated niceness of the walk. The decoupled architecture will have a javascript based front-end and a python based backend. If time permits, we will also have customizable features, such as if the walk contains stairs, etc. 
+
+Idea Two: Comment -> Playlist
+
+Our pitch is to use a combination of the YouTube (https://developers.google.com/youtube/v3), Watson (https://developer.ibm.com/components/watson-apis/), and Spotify (https://developer.spotify.com) public APIs to take a user’s youtube comments, analyze their content and sentiment with Watson, and then based on those returned results generate a Spotify playlist for the user. We anticipate needing to use OAuth for both Spotify and YouTube. Our ideas for using a database are to either cache playlist data or a user’s comments so that we can add to the cached comments for easy playlist generation. We could also do something like a weekly or daily playlist refresher where we push an update to a user’s playlist based on recent comments.
+
+
+Idea Three: Determine whether bus, T, BUS, walking, or Uber/Lyft will deliver you to your class fastest. - taken from assignment document
+
+
+Idea Four: Dating web app helps match you with people who have similar music/TV show tastes
+While matching is easy, matching a good one is hard. We are aiming to develop a web application that helps people match people with similar tastes. We will use Spotify API (https://developer.spotify.com/documentation/web-api/) to find out your top music genre and YouTube API (https://developers.google.com/youtube/v3) to look for your favorite video subscription. Users will use both Spotify and YouTube authentication to login. Database will store personal information and matching data.
