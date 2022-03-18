@@ -19,3 +19,10 @@ Idea Three: Determine whether bus, T, BUS, walking, or Uber/Lyft will deliver yo
 
 Idea Four: Dating web app helps match you with people who have similar music/TV show tastes
 While matching is easy, matching a good one is hard. We are aiming to develop a web application that helps people match people with similar tastes. We will use Spotify API (https://developer.spotify.com/documentation/web-api/) to find out your top music genre and YouTube API (https://developers.google.com/youtube/v3) to look for your favorite video subscription. Users will use both Spotify and YouTube authentication to login. Database will store personal information and matching data.
+
+
+Final idea:
+
+using Google maps API to gather travel time
+input weather and user input to Watson for sentiment analysis
+generate Spotify playlist based on the sentiment
