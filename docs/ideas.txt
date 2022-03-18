@@ -26,3 +26,4 @@ Final idea:
 using Google maps API to gather travel time
 input weather and user input to Watson for sentiment analysis
 generate Spotify playlist based on the sentiment
+database stores links to previous playlists for a particular destination
