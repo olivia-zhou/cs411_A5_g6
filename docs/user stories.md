@@ -13,4 +13,7 @@ Importance/Description: This feature is the backbone of our web app since we wil
 
 # 4. "as a logged-in user, I want to be able to log out of spotify to protect my information"
 
+Description: The user should be able to log out any time if they want. The access should be simple, easy to find and works in any situations(include no signal, no internet and etc.). If user has log in an unauthorised device, it should erase everything when user log out(include view history, travel path, playlist and etc). When 
+user log in an new device, it should ask user that if they want to authorise current device. If spotify is doing nothing or in background mode for thirty mins, it will automatically log out. 
+
 # 5. "as a user, I want to be able to view the current weather to know what the weather will be like when traveling"
