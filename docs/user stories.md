@@ -1,11 +1,11 @@
 # 1. "as a user, I want to search for destinations in order to determine the travel time"
 
-Happy Path: The user should be able to access a small Google Maps widgit on our web app without logging in. This is the first step to using our web app so it will appear near the top with a small prompt. The widgit should work like normal Google Maps, in which the user can input a destination and determine the travel time and directions according to their current or desired starting location. 
+Happy Path: The user should be able to access a small Google Maps widget on our web app without logging in. This is the first step to using our web app so it will appear near the top with a small prompt. The widget should work like normal Google Maps, in which the user can input a destination and determine the travel time and directions according to their current or desired starting location. 
 
 
 Exceptions: A possible issue could occur if the user enters a destination or starting location that do not exist within the Google Maps API. In this case, we will continue using the Google Maps API to display a destination/location error and to prompt the user to try again with a different address. 
 
-Importance/Description: This feature is the backbone of our web app since we will base the length of the playlist pn the length of travel and store the playlists depending on the destination. Also, we decided that users do not have to log in to use this feature, or to check the weater, because not everybody always wants to download a playlist. This way, users will still be able to use our web app to determine important information for their travel plans with or without downloading a free playlist, depending on their mood. 
+Importance/Description: This feature is the backbone of our web app since we will base the length of the playlist on the length of travel and store the playlists depending on the destination. Also, we decided that users do not have to log in to use this feature, or to check the weater, because not everybody always wants to download a playlist. This way, users will still be able to use our web app to determine important information for their travel plans with or without downloading a free playlist, depending on their mood. 
 
 # 2. "as a user, I want to be able to login to Spotify in order to add Spotify playlists to my Spotify account"
 
@@ -21,6 +21,14 @@ Description: The user should be able to log out any time if they want. The acces
 user log in an new device, it should ask user that if they want to authorise current device. If spotify is doing nothing or in background mode for thirty mins, it will automatically log out. 
 
 # 5. "as a user, I want to be able to view the current weather to know what the weather will be like when traveling"
+Happy Path: 
+After the user successfully enters the destination in Story 1, the user should be able to access the weather on a widget on our web application. The user should be able to view the weather information of the current location, the destination, and the change during traveling. 
+
+Exceptions: 
+One possible scenario is that the trip encounters extreme weather conditions, such as a storm or hurricane. We will pop up a window to alert the user of the current situation, but the user can choose to continue or cancel the trip.
+
+Importance/Description: 
+The user should be able to view detailed weather information they may experience without logging in. We will include temperature, the chance of rain, humidity, wind, visibility, and air quality press to prepare the user for the trip. The users can also generate playlists regarding current weather in Story 5. 
 
 # 6. "as a logged-in user, I want to press the Generate Playlist button to gerenate a playlist for my destination"
 
