@@ -17,7 +17,7 @@
 
 ## 3. "as a logged-in user, I want to view the playlist so I can see what music has been recommended to me"
 
-**Happy path:** First, the user signs in using their Spotify account. Second, the user inputs their route for the walk. Then, the app generate a playlist and display it to the user. The user should then be able to listen to the playlist through Spotify.
+**Happy path:** After clicking generate playlist in Story 6, the app generate a playlist and display it to the user. The user should then be able view all songs in the playlist and listen to the playlist through Spotify.
 
 What the app displays to the user can be some information about each song like its title and artist. The app can also give a short summary of the playlist like the top few artists within the playlist, the most popular genre of music within the playlist, or a title or short phrase for the playlist.
 
