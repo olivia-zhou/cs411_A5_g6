@@ -9,6 +9,10 @@ Importance/Description: This feature is the backbone of our web app since we wil
 
 # 2. "as a user, I want to be able to login to Spotify in order to download playlists and listen to songs"
 
+Description: The user should press an imbedded Spotify prompt and be directed to a Spotify OAuth window so that they can authenticate. Once they do that, they will return to our main page with the Google Maps widget as mentioned in Story 1. This is necessary so that generated playlists can be added directly into the account of our users. Ideally, this will also allow us to pull and display a history of playlists that the authenticated user has generated with our application.
+
+Exceptions: If a user fails the login, they should be thrown back to the main page from Story 1 and be given a brief error message that login has failed. (This might not be necessary as the Spotify OAuth might catch this and prevent user from being thrown back.)
+
 # 3. "as a logged-in user, I want to view the playlist so I can see what music has been recommended to me"
 
 # 4. "as a logged-in user, I want to be able to log out of spotify to protect my information"
