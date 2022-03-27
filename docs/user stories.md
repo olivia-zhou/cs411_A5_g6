@@ -7,7 +7,7 @@ Exceptions: A possible issue could occur if the user enters a destination or sta
 
 Importance/Description: This feature is the backbone of our web app since we will base the length of the playlist pn the length of travel and store the playlists depending on the destination. Also, we decided that users do not have to log in to use this feature, or to check the weater, because not everybody always wants to download a playlist. This way, users will still be able to use our web app to determine important information for their travel plans with or without downloading a free playlist, depending on their mood. 
 
-# 2. "as a user, I want to be able to login to Spotify in order to download playlists and listen to songs"
+# 2. "as a user, I want to be able to login to Spotify in order to add Spotify playlists to my Spotify account"
 
 Description: The user should press an imbedded Spotify prompt and be directed to a Spotify OAuth window so that they can authenticate. Once they do that, they will return to our main page with the Google Maps widget as mentioned in Story 1. This is necessary so that generated playlists can be added directly into the account of our users. Ideally, this will also allow us to pull and display a history of playlists that the authenticated user has generated with our application.
 
@@ -21,3 +21,7 @@ Description: The user should be able to log out any time if they want. The acces
 user log in an new device, it should ask user that if they want to authorise current device. If spotify is doing nothing or in background mode for thirty mins, it will automatically log out. 
 
 # 5. "as a user, I want to be able to view the current weather to know what the weather will be like when traveling"
+
+# 6. "as a logged-in user, I want to press the Generate Playlist button to gerenate a playlist for my destination"
+
+Description: I, an authenticated user, have already searched for a destination as in Story 1 and have authenticated as in Story 2. After checkking the displayed travel length and reviewing the weather (Story 5), I decide to press the Generate Playlist button on the page. Our app then takes the inputted destination and weather and generates a playlist for this specific circumstance and displays it (Story 3) before using embedded Spotify features to add it to their acccount for audio playback on their device of choice.
