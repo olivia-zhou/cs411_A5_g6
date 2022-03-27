@@ -15,6 +15,12 @@ Exceptions: If a user fails the login, they should be thrown back to the main pa
 
 # 3. "as a logged-in user, I want to view the playlist so I can see what music has been recommended to me"
 
+Happy path: First, the user signs in using their Spotify account. Second, the user inputs their route for the walk. Then, the app generate a playlist and display it to the user.
+
+What the app displays to the user can be some information about each song like its title and artist. The app can also give a short summary of the playlist like the top few artists within the playlist, the most popular genre of music within the playlist, or a title or short phrase for the playlist.
+
+Given that our app is powered by Spotify, which provides music streaming services, it will be convenient for the user if our app enables the user to begin listening to the playlist in just a few clicks. [Spotify allows developers to embed a playlist directly into a website.](https://developer.spotify.com/documentation/widgets/generate/embed/) The app can also give a link that leads directly to a Spotify url for that playlist.
+
 # 4. "as a logged-in user, I want to be able to log out of spotify to protect my information"
 
 Description: The user should be able to log out any time if they want. The access should be simple, easy to find and works in any situations(include no signal, no internet and etc.). If user has log in an unauthorised device, it should erase everything when user log out(include view history, travel path, playlist and etc). When 
