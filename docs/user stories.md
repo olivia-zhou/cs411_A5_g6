@@ -3,7 +3,7 @@
 Happy Path: The user should be able to access a small Google Maps widget on our web app without logging in. This is the first step to using our web app so it will appear near the top with a small prompt. The widget should work like normal Google Maps, in which the user can input a destination and determine the travel time and directions according to their current or desired starting location. 
 
 
-Exceptions: A possible issue could occur if the user enters a destination or starting location that do not exist within the Google Maps API. In this case, we will continue using the Google Maps API to display a destination/location error and to prompt the user to try again with a different address. 
+Exceptions: A possible issue could occur if the user enters a destination or starting location that do not exist within the Google Maps API. In this case, we will continue using the Google Maps API to display a destination/location error and to prompt the user to try again with a different address. Another potentential issue could occur if the user hsan't granted location access. In this case, we would present a small reminder that the app didn't have location access. This prompt wouldn't disrupt the user, though, since they would still be able to manually enter the 'from' location.
 
 Importance/Description: This feature is the backbone of our web app since we will base the length of the playlist on the length of travel and store the playlists depending on the destination. Also, we decided that users do not have to log in to use this feature, or to check the weater, because not everybody always wants to download a playlist. This way, users will still be able to use our web app to determine important information for their travel plans with or without downloading a free playlist, depending on their mood. 
 
@@ -15,16 +15,22 @@ Exceptions: If a user fails the login, they should be thrown back to the main pa
 
 # 3. "as a logged-in user, I want to view the playlist so I can see what music has been recommended to me"
 
-Happy path: First, the user signs in using their Spotify account. Second, the user inputs their route for the walk. Then, the app generate a playlist and display it to the user.
+Happy path: First, the user signs in using their Spotify account. Second, the user inputs their route for the walk. Then, the app generate a playlist and display it to the user. The user should then be able to listen to the playlist through Spotify.
 
 What the app displays to the user can be some information about each song like its title and artist. The app can also give a short summary of the playlist like the top few artists within the playlist, the most popular genre of music within the playlist, or a title or short phrase for the playlist.
 
 Given that our app is powered by Spotify, which provides music streaming services, it will be convenient for the user if our app enables the user to begin listening to the playlist in just a few clicks. [Spotify allows developers to embed a playlist directly into a website.](https://developer.spotify.com/documentation/widgets/generate/embed/) The app can also give a link that leads directly to a Spotify url for that playlist.
 
+Exceptions: If the user is not logged in and they try to follow the playlist, they'll be prompted to log into Spotify first. This would be handled as described in story #2.
+
 # 4. "as a logged-in user, I want to be able to log out of spotify to protect my information"
+
+Happy path: There should be a simple log out button which, upon being pressed, prompts the user to confirm that they want to log out. If they confirm, they should be logged out. If they cancel, the prompt should go away and they should be back on the same screen as they were prior to selecting the button.
 
 Description: The user should be able to log out any time if they want. The access should be simple, easy to find and works in any situations(include no signal, no internet and etc.). If user has log in an unauthorised device, it should erase everything when user log out(include view history, travel path, playlist and etc). When 
 user log in an new device, it should ask user that if they want to authorise current device. If spotify is doing nothing or in background mode for thirty mins, it will automatically log out. 
+
+Exceptions: Obviously, if the user isn't logged in, they shouldn't be able to log out. So, we won't provide a way to do so until they've logged in.
 
 # 5. "as a user, I want to be able to view the current weather to know what the weather will be like when traveling"
 Happy Path: 
