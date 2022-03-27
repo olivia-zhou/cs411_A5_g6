@@ -9,7 +9,9 @@ Importance/Description: This feature is the backbone of our web app since we wil
 
 # 2. "as a user, I want to be able to login to Spotify in order to add Spotify playlists to my Spotify account"
 
-Description: The user should press an imbedded Spotify prompt and be directed to a Spotify OAuth window so that they can authenticate. Once they do that, they will return to our main page with the Google Maps widget as mentioned in Story 1. This is necessary so that generated playlists can be added directly into the account of our users. Ideally, this will also allow us to pull and display a history of playlists that the authenticated user has generated with our application.
+Happy Path: The user should press an imbedded Spotify prompt and be directed to a Spotify OAuth window so that they can authenticate. Once they do that, they will return to our main page with the Google Maps widget as mentioned in Story 1. 
+
+Description/Details: This is necessary so that generated playlists can be added directly into the account of our users and so that we have access to all of the embedded Spotify features that are critical to our app: (Story 3: View Playlist), (Story 6: Generate Playlist). Ideally, this will also allow us to pull and display a history of playlists that the authenticated user has generated with our application if we decide to include this feature.
 
 Exceptions: If a user fails the login, they should be thrown back to the main page from Story 1 and be given a brief error message that login has failed. (This might not be necessary as the Spotify OAuth might catch this and prevent user from being thrown back.)
 
@@ -44,6 +46,8 @@ The user should be able to view detailed weather information they may experience
 
 # 6. "as a logged-in user, I want to press the Generate Playlist button to gerenate a playlist for my destination"
 
-Description: I, an authenticated user, have already searched for a destination as in Story 1 and have authenticated as in Story 2. After checkking the displayed travel length and reviewing the weather (Story 5), I decide to press the Generate Playlist button on the page. Our app then takes the inputted destination and weather and generates a playlist for this specific circumstance and displays it (Story 3) before using embedded Spotify features to add it to their acccount for audio playback on their device of choice.
+Happy Path: I, an authenticated user, have already searched for a destination as in Story 1 and have authenticated as in Story 2. After checkking the displayed travel length and reviewing the weather (Story 5), I decide to press the Generate Playlist button on the page. Our app then takes the inputted destination and weather and generates a playlist for this specific circumstance and displays it (Story 3) before using embedded Spotify features to add it to their acccount for audio playback on their device of choice.
+
+Description: As decribed above, this button will generate a playlist for an authed user given a destination. It should also add this playlist into the database which will hold all the playlists generated for a given chosen destination/path.
 
 Exception: If the user clicks this button while not being authenticated or without a destinated selected, they should be given a brief error and told to auth and select a destination.
