@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -6,6 +6,7 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 
-if __name__ == '__main__':
-    app.debug = True
-    app.run()
+@app.route("/weather", methods=["GET"])
+def get_weather():
+    zip = request.values.get('zip')
+    return {"response": zip}
