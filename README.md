@@ -6,7 +6,7 @@ Using weather and user input information for Watson sentiment analysis to create
 
 To Peers:
 
-1) Activate Python Virtual Env Before Working --> Look it up based on what OS you are running, env dir is in root
+1) Make/Activate Python Virtual Env Before Working --> Look it up based on what OS you are running
 
 2) When env is active, run 
     pip install -r requirements.txt 
