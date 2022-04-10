@@ -12,6 +12,4 @@ To Peers:
     pip install -r requirements.txt 
 to get all the latest packages needed for testing/dev
 
-3) Once you have the backend running, use
-    npm start
-   in root directory to get the frontend to start
+3) Once you have the backend running, navigate to frontend and use '''npm start''' to start the frontend
