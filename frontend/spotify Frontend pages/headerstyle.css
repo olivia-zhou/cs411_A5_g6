@@ -1,0 +1,99 @@
+* {
+    margin : 0;
+    padding : 0;
+}
+/* 版心--web box central */
+.w {
+    width: 1250px;
+    margin: auto;
+}
+body{
+    background-color: black;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+/* 头部第一板块高度与背景颜色--header height and background color */
+.header{
+    height: 59px;
+    margin: 30px auto;
+}
+/* header logo */
+.logo{
+    float: left;
+    width: 198px;
+    height: 59px;
+}
+/* Nav part */
+.nav{
+    float: left;
+    margin-left: 60px;
+}
+.nav ul li{
+    float: left;
+    margin:0 15px;
+}
+.nav ul li a{
+    display: block;
+    height: 59px;
+    padding: 0 10px;
+    line-height: 59px;
+    font-size: 18px;
+    color: aliceblue;
+}
+.nav ul li a:hover{
+    border-bottom: 2px solid aqua;     /* nav underline color */
+    color: aqua;                      /* nav words color */
+}
+
+/* Search Mod */
+.search{
+    float: left;
+    width: 412px;
+    height: 59px;
+    margin-left: 50px;
+}
+.search input{
+    float: left;
+    margin-top: 9px;
+    width: 345px;
+    height: 42px;
+    border: 1px blue;
+    border-right: 0;
+    color: #bfbfbf;
+    font-size: 15px;
+    padding-left: 14px;
+}
+.search button{
+    margin-top: 9px;
+    float: left;
+    width: 50px;
+    height: 42px;
+    border: 0;
+    background-image: url(Image/SearchIcon.jpg);
+}
+
+/* Nav part */
+.user{
+    float: left;
+    margin-left: 30px;
+}
+.user ul li{
+    float: left;
+    margin:0 15px;
+}
+.user ul li a{
+    display: block;
+    height: 59px;
+    padding: 0 10px;
+    line-height: 59px;
+    font-size: 18px;
+    color: aliceblue;
+}
+.user ul li a:hover{
+    border-bottom: 2px solid red;     /* nav underline color */
+    color: aqua;                      /* nav words color */
+}
