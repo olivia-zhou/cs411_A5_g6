@@ -1,7 +1,9 @@
 from flask import Flask, request, redirect, render_template
+from flask_cors import CORS #comment this on deployment
 import requests
 
 app = Flask(__name__)
+CORS(app)
 
 '''
 Test Endpoint
