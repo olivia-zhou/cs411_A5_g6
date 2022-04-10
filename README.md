@@ -11,3 +11,7 @@ To Peers:
 2) When env is active, run 
     pip install -r requirements.txt 
 to get all the latest packages needed for testing/dev
+
+3) Once you have the backend running, use
+    npm start
+   in root directory to get the frontend to start
