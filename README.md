@@ -11,11 +11,11 @@ Using weather and user input information for Watson sentiment analysis to create
     For windows users: ```py -m venv env```
 
     For mac/unix users: ```source env/bin/activate```
-    For windows users:  ```.\env\Scripts\activate```
+    For windows users in git bash:  ```. env\Scripts\activate```
 
 2) Run ```bash ./update_reqs.sh``` to get all dependencies and requirements for python and node
 
-3) Run ```bash ./run_project.sh``` to run both the frontend and backend simultaneously
+3) Run ```bash ./run_backend.sh``` and ```bash ./run_frontend.sh``` in separate terminals to run the frontend and backend simultaneously
 
 NOTES
 - Your ports might need to be adjusted based on what flask runs on and what react runs on, check your console at runtime
