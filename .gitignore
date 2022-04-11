@@ -6,6 +6,9 @@ env
 
 # dependencies
 frontend/node_modules
+frontend/node_modules/
+frontend/node_modules/.
+./frontend/node_modules/
 /.pnp
 .pnp.js
 
