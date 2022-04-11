@@ -11,7 +11,7 @@ function App() {
   function getData() {
     axios({
       method: "GET",
-      url:"http://localhost:5000/weather?lat=42.3061&lon=-71.0589",
+      url:"http://localhost:4000/weather?lat=42.3061&lon=-71.0589",
     })
     .then((response) => {
       const res =response.data
