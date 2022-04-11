@@ -4,12 +4,19 @@ Justin Sayah, Bryce Freeman, Nathan Ho, Yvonne Wu, Olivia Zhou, Zizhuang Guo
 
 Using weather and user input information for Watson sentiment analysis to create a Spotify playlist for a particular walk
 
-To Peers:
+# To Peers BEFORE WORKING:
 
-1) Make/Activate Python Virtual Env Before Working --> Look it up based on what OS you are running
+1) Activate Python Virtual Env Before Working --> Look it up based on what OS you are running
+    For mac/unix users: ```python3 -m venv env```
+    For windows users: ```py -m venv env```
 
-2) When env is active, run 
-    pip install -r requirements.txt 
-to get all the latest packages needed for testing/dev
+    For mac/unix users: ```source env/bin/activate```
+    For windows users:  ```.\env\Scripts\activate```
 
-3) Once you have the backend running, navigate to frontend and use ```npm start``` to start the frontend
+2) Run ```bash ./update_reqs.sh``` to get all dependencies and requirements for python and node
+
+3) Run ```bash ./run_project.sh``` to run both the frontend and backend simultaneously
+
+NOTES
+- Your ports might need to be adjusted based on what flask runs on and what react runs on, check your console at runtime
+- WINDOWS USERS: Don't run the shell scripts from Powershell, use git bash plz
