@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from flask_cors import CORS #comment this on deployment
 import requests
+from sentiment_processing import get_sentiment
 
 app = Flask(__name__)
 CORS(app)
@@ -34,3 +35,12 @@ def get_weather():
     #print(location_data["properties"])
     most_recent_forecast = location_data["properties"]["periods"][0]
     return most_recent_forecast
+
+@app.route("/analysis", methods = ["GET", "POST"])
+def analysis():
+    """sends weather information to Watson for sentiment analysis"""
+    new_req_url = request.url.replace("analysis","weather")
+    forecast = requests.get(new_req_url).json()["detailedForecast"]
+    print(forecast)
+    sentiment = get_sentiment(forecast)
+    return str(sentiment)
