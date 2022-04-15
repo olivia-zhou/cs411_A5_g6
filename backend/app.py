@@ -21,6 +21,7 @@ def get_weather():
 
     lat = request.values.get("lat")
     lon = request.values.get("lon")
+    print(lat, lon)
     location_request = "https://api.weather.gov/points/"+ lat + "," + lon
 
     #location_point = requests.get("https://api.weather.gov/gridpoints/LWX/96,70/forecast", headers={"User-Agent": "(test.com, test@test.com)"})
@@ -44,3 +45,9 @@ def analysis():
     print(forecast)
     sentiment = get_sentiment(forecast)
     return str(sentiment)
+
+@app.route("/login")
+def login():
+    return "test"
+
+    #TEST: http://127.0.0.1:5000/weather?lat=40.730610&lon=-73.935242
