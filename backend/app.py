@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, render_template
 from flask_cors import CORS #comment this on deployment
 import requests
 from sentiment_processing import get_sentiment
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -46,8 +47,74 @@ def analysis():
     sentiment = get_sentiment(forecast)
     return str(sentiment)
 
-@app.route("/login")
+
+'''
+SPOTIFY API AUTHORIZATION PIPELINE
+'''
+
+#Spotify information
+SPOTIFY_ENDPOINT = 'https://api.spotify.com/v1/'
+CLIENT_SECRET = 'b9e9785a1066492e972efe867d5190df'
+CLIENT_ID = '409b58756fd146ec81debb62c51eb887'
+CLIENT_URL = 'http://127.0.0.1'
+PORT = '5000'
+REDIRECT_URL = '{}:{}/callback'.format(CLIENT_URL, PORT)
+HOME = '{}:{}/'.format(CLIENT_URL, PORT)
+SCOPE = 'ugc-image-upload user-read-email user-read-private user-top-read playlist-modify-public playlist-modify-private playlist-read-private'
+
+
+@app.route('/login', methods = ["GET"])
 def login():
-    return "test"
+    print (REDIRECT_URL)
+    parameters = 'response_type=code&client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URL + '&scope=' + SCOPE
+    authorize_url = 'https://accounts.spotify.com/en/authorize?' + parameters
+    return redirect(authorize_url)
+
+@app.route('/callback')
+def callback():
+    if request.args.get('error'):
+        return render_template('index.html', error = 'Spotify error')
+    else:
+        code = request.args.get('code')
+        token = get_token(code)
+        if token != None:
+            response = json.loads(token.text)
+            access_token = response["access_token"]
+            token_type = response['token_type']
+            scope = response['scope']
+            expires_in = response["expires_in"]
+            refresh_token = response["refresh_token"]
+        else:
+            return render_template('index.html', error = 'Token failure')
+    #country, name, email = get_user_info(access_token)
+    info = get_user_info(access_token)
+    print (info)
+    return redirect(HOME)
+
+
+def get_token(code):
+    token_url = 'https://accounts.spotify.com/api/token' 
+    token_info = {
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': REDIRECT_URL,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET
+        }
+    response = requests.post(token_url, data = token_info)
+    return response
+
+def refresh_token(refresh_token):
+    token_url = 'https://accounts.spotify.com/api/token' 
+    token_info = {
+            'grant_type': 'refresh_token',
+            'code': refresh_token,
+            'redirect_uri': REDIRECT_URL,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET
+        }
+    response = requests.post(token_url, data = token_info, headers = {'Authorization': 'Basic', 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'})
+    return response
+
 
     #TEST: http://127.0.0.1:5000/weather?lat=40.730610&lon=-73.935242
