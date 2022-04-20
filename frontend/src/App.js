@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import axios from "axios";
 import './App.css';
-import React from 'react'
+import React from 'react';
+import Map from "./Map";
 
 function App() {
 

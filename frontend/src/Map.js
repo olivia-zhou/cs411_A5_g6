@@ -37,3 +37,4 @@ function Map() {
 }
 
 export default React.memo(Map);
+
