@@ -23,8 +23,8 @@ function Map() {
 
     return (
         <div>
-            <p>Google Map</p>
             <br/>
+            <p>Search your destination</p>
             <GoogleMap
                 id="map"
                 mapContainerStyle={mapContainerStyle}
