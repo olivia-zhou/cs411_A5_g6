@@ -79,6 +79,9 @@ function App() {
             </label>
             <input type="submit" value="Submit" />
           </form>
+          <section>
+              <Map />
+          </section>
         </div>
         
       );
@@ -86,10 +89,6 @@ function App() {
   }
 
    // new line start
-  return(
-    <Map />
-  );
-  
   const [profileData, setProfileData] = useState(null)
   const wForm = <WeatherForm/>
 
