@@ -86,6 +86,10 @@ function App() {
   }
 
    // new line start
+  return(
+    <Map />
+  );
+  
   const [profileData, setProfileData] = useState(null)
   const wForm = <WeatherForm/>
 
