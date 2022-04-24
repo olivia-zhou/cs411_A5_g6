@@ -3,6 +3,7 @@ from flask_cors import CORS #comment this on deployment
 import requests
 from sentiment_processing import get_sentiment
 import json
+from spotify_class import spotify
 
 app = Flask(__name__)
 CORS(app)
@@ -86,9 +87,6 @@ def callback():
             refresh_token = response["refresh_token"]
         else:
             return render_template('index.html', error = 'Token failure')
-    #country, name, email = get_user_info(access_token)
-    info = get_user_info(access_token)
-    print (info)
     return redirect(HOME)
 
 
@@ -115,6 +113,14 @@ def refresh_token(refresh_token):
         }
     response = requests.post(token_url, data = token_info, headers = {'Authorization': 'Basic', 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'})
     return response
+
+@app.route('/generate_playlist')
+def generate_playlist():
+    #get token from database
+    token = 0
+    sentiment = analysis()
+    spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
+    return spotifyplaylist.final_return()
 
 
     #TEST: http://127.0.0.1:5000/weather?lat=40.730610&lon=-73.935242
