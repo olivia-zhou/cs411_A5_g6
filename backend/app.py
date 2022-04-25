@@ -1,5 +1,6 @@
+from audioop import cross
 from flask import Flask, request, redirect, render_template
-from flask_cors import CORS #comment this on deployment
+from flask_cors import CORS, cross_origin #comment this on deployment
 import requests
 from sentiment_processing import get_sentiment
 import json
@@ -7,6 +8,7 @@ from spotify_class import spotify
 
 app = Flask(__name__)
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 '''
 Test Endpoint
@@ -65,6 +67,7 @@ SCOPE = 'ugc-image-upload user-read-email user-read-private user-top-read playli
 
 
 @app.route('/login', methods = ["GET"])
+@cross_origin()
 def login():
     print (REDIRECT_URL)
     parameters = 'response_type=code&client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URL + '&scope=' + SCOPE
@@ -72,6 +75,7 @@ def login():
     return redirect(authorize_url)
 
 @app.route('/callback')
+@cross_origin()
 def callback():
     if request.args.get('error'):
         return render_template('index.html', error = 'Spotify error')
@@ -115,6 +119,7 @@ def refresh_token(refresh_token):
     return response
 
 @app.route('/generate_playlist')
+@cross_origin()
 def generate_playlist():
     #get token from database
     token = 0
