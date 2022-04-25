@@ -38,7 +38,7 @@ const center = {
 
 export default function Map() {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBvQPSmKEkZLTfBAmbrVmMYOqkqfMlItGc",
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries,
     });
     const [markers, setMarkers] = React.useState([]);
