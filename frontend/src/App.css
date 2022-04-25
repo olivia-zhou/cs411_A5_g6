@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.Map {
+  text-align: center;
+}
