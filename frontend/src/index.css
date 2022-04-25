@@ -12,17 +12,8 @@ code {
     monospace;
 }
 
-.search{
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
-  z-index: 10;
-}
-
-.search input {
-  padding: 0.5rem;
-  front-size: 1.5rem;
-  width: 100%;
+.Map2{
+  font-size:5rem;
 }
 
 .locate {

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^1.8.8",
     "@reach/combobox": "^0.17.0",
     "@react-google-maps/api": "^2.8.1",
     "@testing-library/jest-dom": "^5.16.4",
@@ -12,6 +13,7 @@
     "date-fns": "^2.28.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
     "react-scripts": "5.0.0",
     "use-places-autocomplete": "^2.0.0",
     "web-vitals": "^2.1.4"

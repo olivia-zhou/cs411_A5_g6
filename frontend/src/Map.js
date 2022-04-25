@@ -1,196 +1,163 @@
-import React from "react";
 import {
+    Box,
+    Button,
+    ButtonGroup,
+    Flex,
+    HStack,
+    IconButton,
+    Input,
+    SkeletonText,
+    Text,
+} from '@chakra-ui/react'
+import { FaLocationArrow, FaTimes } from 'react-icons/fa'
+
+import {
+    useJsApiLoader,
     GoogleMap,
-    useLoadScript,
     Marker,
-    InfoWindow,
-} from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-    getGeocode,
-    getLatLng,
-} from "use-places-autocomplete";
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxPopover,
-    ComboboxList,
-    ComboboxOption,
-} from "@reach/combobox";
-import { formatRelative } from "date-fns";
+    Autocomplete,
+    DirectionsRenderer,
+} from '@react-google-maps/api'
+import React, { useRef, useState } from 'react'
 
-import "@reach/combobox/styles.css";
-import mapStyles from "./mapStyle";
+const center = { lat: 42.3497644, lng: -71.1041491}
 
-const libraries = ["places"];
-const mapContainerStyle = {
-    height: "50vh",
-    width: "80vw",
-};
-const options = {
-    styles: mapStyles,
-    disableDefaultUI: true,
-    zoomControl: true,
-};
-const center = {
-    lat: 42.3497644,
-    lng: -71.1041491,
-};
+function Map2() {
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: "AIzaSyBvQPSmKEkZLTfBAmbrVmMYOqkqfMlItGc",
+        libraries: ['places'],
+    })
 
-export default function Map() {
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        libraries,
-    });
-    const [markers, setMarkers] = React.useState([]);
-    const [selected, setSelected] = React.useState(null);
+    const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+    const [directionsResponse, setDirectionsResponse] = useState(null)
+    const [distance, setDistance] = useState('')
+    const [duration, setDuration] = useState('')
 
-    const onMapClick = React.useCallback((e) => {
-        setMarkers((current) => [
-            ...current,
-            {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng(),
-                time: new Date(),
-            },
-        ]);
-    }, []);
-
-    const mapRef = React.useRef();
-    const onMapLoad = React.useCallback((map) => {
-        mapRef.current = map;
-    }, []);
+    /** @type React.MutableRefObject<HTMLInputElement> */
+    const originRef = useRef()
+    /** @type React.MutableRefObject<HTMLInputElement> */
+    const destiantionRef = useRef()
 
     const panTo = React.useCallback(({ lat, lng }) => {
-        mapRef.current.panTo({ lat, lng });
-        mapRef.current.setZoom(14);
+        map.panTo({ lat, lng });
+        map.setZoom(14);
     }, []);
 
-    if (loadError) return "Error";
-    if (!isLoaded) return "Loading...";
+    if (!isLoaded) {
+        return <SkeletonText />
+    }
+
+    async function calculateRoute() {
+        if (originRef.current.value === '' || destiantionRef.current.value === '') {
+            return
+        }
+        // eslint-disable-next-line no-undef
+        const directionsService = new google.maps.DirectionsService()
+        const results = await directionsService.route({
+            origin: originRef.current.value,
+            destination: destiantionRef.current.value,
+            // eslint-disable-next-line no-undef
+            travelMode: google.maps.TravelMode.DRIVING,
+        })
+        setDirectionsResponse(results)
+        setDistance(results.routes[0].legs[0].distance.text)
+        setDuration(results.routes[0].legs[0].duration.text)
+    }
+
+    function clearRoute() {
+        setDirectionsResponse(null)
+        setDistance('')
+        setDuration('')
+        originRef.current.value = ''
+        destiantionRef.current.value = ''
+    }
 
     return (
-        <div>
-            <br />
-                <Locate panTo={panTo} />
-                <Search panTo={panTo} />
-            <GoogleMap
-                id="map"
-                mapContainerStyle={mapContainerStyle}
-                zoom={8}
-                center={center}
-                options={options}
-                onClick={onMapClick}
-                onLoad={onMapLoad}
+        <Flex
+            position='relative'
+            flexDirection='column'
+            alignItems='center'
+            h='80vh'
+            w='80vw'
+        >
+            <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+                <GoogleMap
+                    center={center}
+                    zoom={13}
+                    mapContainerStyle={{ width: '100%', height: '100%' }}
+                    options={{
+                        zoomControl: false,
+                        streetViewControl: false,
+                        mapTypeControl: false,
+                        fullscreenControl: false,
+                    }}
+                    onLoad={map => setMap(map)}
+                >
+                    <Marker position={center} />
+                    {directionsResponse && (
+                        <DirectionsRenderer directions={directionsResponse} />
+                    )}
+                </GoogleMap>
+            </Box>
+            <Box
+                p={4}
+                borderRadius='lg'
+                m={4}
+                bgColor='black'
+                shadow='base'
+                minW='container.md'
+                zIndex='1'
             >
-                {markers.map((marker) => (
-                    <Marker
-                        key={`${marker.lat}-${marker.lng}`}
-                        position={{ lat: marker.lat, lng: marker.lng }}
+                <HStack spacing={2} justifyContent='space-between'>
+                    <Box flexGrow={1}>
+                        <Autocomplete>
+                            <Input type='text' placeholder='Origin' ref={originRef} />
+                        </Autocomplete>
+                    </Box>
+                    <Box flexGrow={1}>
+                        <Autocomplete>
+                            <Input
+                                type='text'
+                                placeholder='Destination'
+                                ref={destiantionRef}
+                            />
+                        </Autocomplete>
+                    </Box>
+
+                    <ButtonGroup>
+                        <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
+                            Calculate Route
+                        </Button>
+                        <IconButton
+                            aria-label='center back'
+                            icon={<FaTimes />}
+                            onClick={clearRoute}
+                        />
+                    </ButtonGroup>
+                </HStack>
+                <HStack spacing={4} mt={4} justifyContent='space-between'>
+                    <Text>Distance: {distance} </Text>
+                    <Text>Duration: {duration} </Text>
+                    <IconButton
+                        aria-label='center back'
+                        icon={<FaLocationArrow />}
+                        isRound
                         onClick={() => {
-                            setSelected(marker);
-                        }}
-                        icon={{
-                            url: `https://img.icons8.com/color/48/000000/marker--v1.png`,
-                            origin: new window.google.maps.Point(0, 0),
-                            anchor: new window.google.maps.Point(15, 15),
-                            scaledSize: new window.google.maps.Size(30, 30),
+                            navigator.geolocation.getCurrentPosition(
+                                (position) => {
+                                    panTo({
+                                        lat: position.coords.latitude,
+                                        lng: position.coords.longitude,
+                                    });
+                                },
+                                () => null
+                            );
                         }}
                     />
-                ))}
-
-                {selected ? (
-                    <InfoWindow
-                        position={{ lat: selected.lat, lng: selected.lng }}
-                        onCloseClick={() => {
-                            setSelected(null);
-                        }}
-                    >
-                        <div>
-                            <h2>
-                <span role="img" aria-label="bear">
-                  🐻
-                </span>{" "}
-                                Alert
-                            </h2>
-                            <p>Spotted {formatRelative(selected.time, new Date())}</p>
-                        </div>
-                    </InfoWindow>
-                ) : null}
-            </GoogleMap>
-        </div>
-    );
+                </HStack>
+            </Box>
+        </Flex>
+    )
 }
 
-function Locate({ panTo }) {
-    return (
-        <button
-            className="locate"
-            onClick={() => {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        panTo({
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        });
-                    },
-                    () => null
-                );
-            }}
-        >
-            <img src="https://img.icons8.com/office/16/000000/compass--v1.png" alt="compass" />
-        </button>
-    );
-}
-
-function Search({ panTo }) {
-    const {
-        ready,
-        value,
-        suggestions: { status, data },
-        setValue,
-        clearSuggestions,
-    } = usePlacesAutocomplete({
-        requestOptions: {
-            location: { lat: () => 43.6532, lng: () => -79.3832 },
-            radius: 200 * 1000,
-        },
-    });
-
-    const handleInput = (e) => {
-        setValue(e.target.value);
-    };
-
-    const handleSelect = async (address) => {
-        setValue(address, false);
-        clearSuggestions();
-
-        try {
-            const results = await getGeocode({ address });
-            const { lat, lng } = await getLatLng(results[0]);
-            panTo({ lat, lng });
-        } catch (error) {
-            console.log("Error: ", error);
-        }
-    };
-
-    return (
-        <div className="search">
-            <Combobox onSelect={handleSelect}>
-                <ComboboxInput
-                    value={value}
-                    onChange={handleInput}
-                    disabled={!ready}
-                    placeholder="Search your location"
-                />
-                <ComboboxPopover>
-                    <ComboboxList>
-                        {status === "OK" &&
-                            data.map(({ id, description }) => (
-                                <ComboboxOption key={id} value={description} />
-                            ))}
-                    </ComboboxList>
-                </ComboboxPopover>
-            </Combobox>
-        </div>
-    );
-}
+export default Map

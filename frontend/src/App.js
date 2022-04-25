@@ -80,6 +80,7 @@ function App() {
             </label>
             <input type="submit" value="Submit" />
           </form>
+          <br />
           <section>
               <Map />
           </section>
