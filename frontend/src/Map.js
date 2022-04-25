@@ -22,9 +22,9 @@ import React, { useRef, useState } from 'react'
 
 const center = { lat: 42.3497644, lng: -71.1041491}
 
-function Map2() {
+function Map() {
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "AIzaSyBvQPSmKEkZLTfBAmbrVmMYOqkqfMlItGc",
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: ['places'],
     })
 
@@ -40,7 +40,7 @@ function Map2() {
 
     const panTo = React.useCallback(({ lat, lng }) => {
         map.panTo({ lat, lng });
-        map.setZoom(14);
+        map.setZoom(20);
     }, []);
 
     if (!isLoaded) {
@@ -93,7 +93,6 @@ function Map2() {
                     }}
                     onLoad={map => setMap(map)}
                 >
-                    <Marker position={center} />
                     {directionsResponse && (
                         <DirectionsRenderer directions={directionsResponse} />
                     )}
@@ -139,19 +138,19 @@ function Map2() {
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
                     <IconButton
-                        aria-label='center back'
+                        aria-label='autoLocate'
                         icon={<FaLocationArrow />}
                         isRound
                         onClick={() => {
                             navigator.geolocation.getCurrentPosition(
                                 (position) => {
-                                    panTo({
+                                    map.panTo({
                                         lat: position.coords.latitude,
                                         lng: position.coords.longitude,
-                                    });
+                                    })
                                 },
                                 () => null
-                            );
+                            )
                         }}
                     />
                 </HStack>
