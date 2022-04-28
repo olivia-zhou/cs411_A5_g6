@@ -71,7 +71,10 @@ def login():
     print (REDIRECT_URL)
     parameters = 'response_type=code&client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URL + '&scope=' + SCOPE
     authorize_url = 'https://accounts.spotify.com/en/authorize?' + parameters
-    return make_response(redirect(authorize_url))
+    response = make_response(redirect(authorize_url))
+    response.set_cookie('cross-site-cookie', 'bar', samesite='None', secure=True)
+    response.headers.add('Set-Cookie','cross-site-cookie=bar; SameSite=None; Secure')
+    return response
 
 @app.route('/callback')
 def callback():
