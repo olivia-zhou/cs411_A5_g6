@@ -14,7 +14,6 @@ import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import {
     useJsApiLoader,
     GoogleMap,
-    Marker,
     Autocomplete,
     DirectionsRenderer,
 } from '@react-google-maps/api'
@@ -25,22 +24,21 @@ const center = { lat: 42.3497644, lng: -71.1041491}
 function Map() {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        libraries: ['places'],
+        libraries: ['places']
     })
 
     const [map, setMap] = useState(/** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
-
-    /** @type React.MutableRefObject<HTMLInputElement> */
+    const [latlng, setLatLng] = useState('')
+    
     const originRef = useRef()
-    /** @type React.MutableRefObject<HTMLInputElement> */
     const destiantionRef = useRef()
 
     const panTo = React.useCallback(({ lat, lng }) => {
         map.panTo({ lat, lng });
-        map.setZoom(20);
+        map.setZoom(14);
     }, []);
 
     if (!isLoaded) {
@@ -57,21 +55,36 @@ function Map() {
             origin: originRef.current.value,
             destination: destiantionRef.current.value,
             // eslint-disable-next-line no-undef
-            travelMode: google.maps.TravelMode.DRIVING,
+            travelMode: google.maps.TravelMode.WALKING,
         })
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
+        setLatLng(results.routes[0].legs[0].start_location)
     }
 
     function clearRoute() {
         setDirectionsResponse(null)
         setDistance('')
         setDuration('')
+        setLatLng(center)
         originRef.current.value = ''
         destiantionRef.current.value = ''
+        panTo(center)
     }
-
+    
+    function locate(){
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                map.panTo({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                })
+            },
+            () => null
+        )
+    }
+    
     return (
         <Flex
             position='relative'
@@ -92,10 +105,11 @@ function Map() {
                         fullscreenControl: false,
                     }}
                     onLoad={map => setMap(map)}
-                >
+                    >
                     {directionsResponse && (
                         <DirectionsRenderer directions={directionsResponse} />
                     )}
+
                 </GoogleMap>
             </Box>
             <Box
@@ -134,24 +148,14 @@ function Map() {
                         />
                     </ButtonGroup>
                 </HStack>
-                <HStack spacing={4} mt={4} justifyContent='space-between'>
+                <HStack spacing={4} mt={3} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
                     <IconButton
                         aria-label='autoLocate'
                         icon={<FaLocationArrow />}
                         isRound
-                        onClick={() => {
-                            navigator.geolocation.getCurrentPosition(
-                                (position) => {
-                                    map.panTo({
-                                        lat: position.coords.latitude,
-                                        lng: position.coords.longitude,
-                                    })
-                                },
-                                () => null
-                            )
-                        }}
+                        onClick={locate}
                     />
                 </HStack>
             </Box>
