@@ -1,5 +1,5 @@
 from audioop import cross
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, make_response
 from flask_cors import CORS, cross_origin #comment this on deployment
 import requests
 from sentiment_processing import get_sentiment
@@ -67,15 +67,16 @@ SCOPE = 'ugc-image-upload user-read-email user-read-private user-top-read playli
 
 
 @app.route('/login', methods = ["GET"])
-@cross_origin()
 def login():
     print (REDIRECT_URL)
     parameters = 'response_type=code&client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URL + '&scope=' + SCOPE
     authorize_url = 'https://accounts.spotify.com/en/authorize?' + parameters
-    return redirect(authorize_url)
+    response = make_response(redirect(authorize_url))
+    response.set_cookie('cross-site-cookie', 'bar', samesite='None', secure=True)
+    response.headers.add('Set-Cookie','cross-site-cookie=bar; SameSite=None; Secure')
+    return response
 
 @app.route('/callback')
-@cross_origin()
 def callback():
     if request.args.get('error'):
         return render_template('index.html', error = 'Spotify error')
@@ -91,7 +92,8 @@ def callback():
             refresh_token = response["refresh_token"]
         else:
             return render_template('index.html', error = 'Token failure')
-    return redirect(HOME)
+    
+    return make_response('Sucessful login')
 
 
 def get_token(code):
@@ -119,12 +121,12 @@ def refresh_token(refresh_token):
     return response
 
 @app.route('/generate_playlist')
-@cross_origin()
 def generate_playlist():
     #get token from database
     token = 0
     sentiment = analysis()
     spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
+    print (spotifyplaylist.final_return())
     return spotifyplaylist.final_return()
 
 
