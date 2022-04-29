@@ -5,3 +5,5 @@
 **Description:** This feature should allow the user to query our database of previously generated playlists for those with some given destination. The results will then be given to the user who can interact with them in a way similar to a newly generated playlist.
 
 **Exceptions:** If no previouly generated playlists are associated with the destination given, the history page should display test clarifying that no playlists were found. A potential alternative to this case is to give playlists associated with the nearest destination to the one entered. In this case, there would be text between the text box and the search results which clarified that there were no playlists for the searched location and that the results were for \[nearby place].
+
+**Edited:** The feature of viewing previously generated playlists was dropped. The logged-in user will be able to view playlists on logged-in Spotify accounts, but not able to view other playlists from the same destination.
