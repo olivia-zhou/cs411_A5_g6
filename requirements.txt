@@ -17,6 +17,7 @@ npx==0.1.1
 numpy==1.22.3
 optional-django==0.1.0
 PyJWT==2.3.0
+pymongo==4.1.1
 python-dateutil==2.8.2
 python-dotenv==0.20.0
 react==4.3.0
