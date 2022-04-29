@@ -55,9 +55,12 @@ def analysis():
 SPOTIFY API AUTHORIZATION PIPELINE
 '''
 
+f = open('spotify_key.json')
+key = json.load(f)
+
 #Spotify information
 SPOTIFY_ENDPOINT = 'https://api.spotify.com/v1/'
-CLIENT_SECRET = 'b9e9785a1066492e972efe867d5190df'
+CLIENT_SECRET = key['client_secret']
 CLIENT_ID = '409b58756fd146ec81debb62c51eb887'
 CLIENT_URL = 'http://127.0.0.1'
 PORT = '5000'
@@ -129,5 +132,9 @@ def generate_playlist():
     print (spotifyplaylist.final_return())
     return spotifyplaylist.final_return()
 
+@app.route('/logout')
+def logout():
+    url = 'https://accounts.spotify.com/en/logout'
+    return redirect(url)
 
     #TEST: http://127.0.0.1:5000/weather?lat=40.730610&lon=-73.935242
