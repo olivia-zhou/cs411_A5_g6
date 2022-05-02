@@ -5,6 +5,8 @@ import requests
 from sentiment_processing import get_sentiment
 import json
 from spotify_class import spotify
+import base64
+
 
 app = Flask(__name__)
 CORS(app)
@@ -54,16 +56,15 @@ def analysis():
 '''
 SPOTIFY API AUTHORIZATION PIPELINE
 '''
-
 f = open('spotify_key.json')
 key = json.load(f)
 
 #Spotify information
 SPOTIFY_ENDPOINT = 'https://api.spotify.com/v1/'
-CLIENT_SECRET = key['client_secret']
-CLIENT_ID = '409b58756fd146ec81debb62c51eb887'
+CLIENT_ID = f'409b58756fd146ec81debb62c51eb887'
 CLIENT_URL = 'http://127.0.0.1'
-PORT = '5000' #CHANGE TO FLASK PORT
+CLIENT_SECRET = key['client_secret']
+PORT = '5000'
 REDIRECT_URL = '{}:{}/callback'.format(CLIENT_URL, PORT)
 HOME = '{}:{}/'.format(CLIENT_URL, PORT)
 SCOPE = 'ugc-image-upload user-read-email user-read-private user-top-read playlist-modify-public playlist-modify-private playlist-read-private'
@@ -86,17 +87,9 @@ def callback():
     else:
         code = request.args.get('code')
         token = get_token(code)
-        if token != None:
-            response = json.loads(token.text)
-            access_token = response["access_token"]
-            token_type = response['token_type']
-            scope = response['scope']
-            expires_in = response["expires_in"]
-            refresh_token = response["refresh_token"]
-        else:
-            return render_template('index.html', error = 'Token failure')
-    
-    return make_response('Sucessful login')
+        sentiment = 0.7
+        #spotifyinfo = spotify(CLIENT_ID, token, sentiment)
+    return make_response(token)
 
 
 def get_token(code):
@@ -105,11 +98,25 @@ def get_token(code):
             'grant_type': 'authorization_code',
             'code': code,
             'redirect_uri': REDIRECT_URL,
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET
+            'client_id': CLIENT_ID
         }
-    response = requests.post(token_url, data = token_info)
-    return response
+    encoded_id = base64.b64encode(str.encode(CLIENT_ID)).decode()
+    encoded_secret = base64.b64decode(str.encode(CLIENT_SECRET)).decode()
+    header = {
+        'Authorization': 'Basic <{}:{}>'.format(encoded_id, encoded_secret),
+        'Content-Type':'application/x-www-form-urlencoded'
+        }
+    token = requests.post(token_url, data = token_info, headers=header)
+    if token != None:
+        response = json.loads(token.text)
+        access_token = response["access_token"]
+        token_type = response['token_type']
+        scope = response['scope']
+        expires_in = response["expires_in"]
+        refresh_token = response["refresh_token"]
+    else:
+        return render_template('index.html', error = 'Token failure')
+    return access_token
 
 def refresh_token(refresh_token):
     token_url = 'https://accounts.spotify.com/api/token' 
@@ -120,17 +127,32 @@ def refresh_token(refresh_token):
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET
         }
-    response = requests.post(token_url, data = token_info, headers = {'Authorization': 'Basic', 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'})
-    return response
+    token = requests.post(token_url, data = token_info, headers = {'Authorization': 'Basic', 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'})
+    if token != None:
+        response = json.loads(token.text)
+        access_token = response["access_token"]
+        token_type = response['token_type']
+        scope = response['scope']
+        expires_in = response["expires_in"]
+    return access_token
 
 @app.route('/generate_playlist')
 def generate_playlist():
-    #get token from database
-    token = 0
-    sentiment = analysis()
-    spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
-    print (spotifyplaylist.final_return())
-    return spotifyplaylist.final_return()
+    token = request.args.get('access_token')
+    token_type = request.args.get('token_type')
+    expires_in = request.args.get('expires_in')
+    if token != None:
+        sentiment = redirect('http://127.0.0.1:5000/analysis')
+        print(sentiment)
+        print('checkcheckcheck')
+        #spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
+        #print (spotifyplaylist.final_return())
+        return make_response('check')
+    else:
+        print('fail')
+        return "hi"
+    return make_response('bug check - delete later')
+
 
 @app.route('/logout')
 def logout():
