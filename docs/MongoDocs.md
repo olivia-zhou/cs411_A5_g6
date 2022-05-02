@@ -1,0 +1,11 @@
+The database system we are using is MongoDB.
+
+Install MongoDB Community Edition by following the tutorial for your operating system at https://www.mongodb.com/docs/manual/installation/#mongodb-installation-tutorials. Continue in the tutorial until you started MongoDB.
+
+To test that MongoDB is started, go to the command line. Use the command `mongo`. It should open up an interactive mongo shell. In this shell, type `help` and it should show you a list of commands. One of those commands should be "show dbs". If this works, then the MongoDB database is running on your machine. Type `exit` to close the mongo shell. If MongoDB is not started then go to the MongoDB installation tutorial for your operating system to find the steps to start MongoDB. The MongoDB server on your machine can be found at localhost on port 27017 by default.
+
+To interact with the MongoDB database from python, we use the pymongo library. You can install pymongo using the command `pip install pymongo`. The MongoDatabaseConnection provides a clean interface for interacting with the database. You create a MongoDatabaseConnection object, open it, and then can add tokens with the `add_token` function and retrieve tokens with the `find_tokens_by_uuid` and `find_tokens_by_email` functions. If you are done using the connection then you can close the connection and delete the object. You cannot reopen a closed connection.
+
+The database schema is that there are 5 fields: uuid, email, token, create_timestamp, and expire_timestamp. If you pass in a string, int, float, None, or a list or float of those things, then the database will store the data and return it exactly as it was given. The code does not enforce the data to adhere to any data type. When reading from the database, the returned objects are not guaranteed to be returned in any particular order. The implementation will return all matching objects, no matter how many matching objects there are. There is no notion of order for the timestamp fields. You can clear the database by creating a mongo shell using the `mongo` command, using the command `use WeatherApp`, and using the command `db.SpotifyUserAuthTokens.drop()`. The config options of MongoDatabaseConnection are located at the top of MongoDatabaseConnection.py.
+
+Example scripts that demonstrate using MongoDatabaseConnection are in the docs/scripts folder.
