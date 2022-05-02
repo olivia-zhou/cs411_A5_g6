@@ -142,7 +142,8 @@ def generate_playlist():
     token_type = request.args.get('token_type')
     expires_in = request.args.get('expires_in')
     if token != None:
-        sentiment = redirect('http://127.0.0.1:5000/analysis')
+        #sentiment = redirect('http://127.0.0.1:5000/analysis')
+        sentiment = .5
         print(sentiment)
         print('checkcheckcheck')
         #spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
