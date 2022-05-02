@@ -4,7 +4,14 @@ import './App.css';
 import React from 'react';
 import Map from "./Map";
 
+import { SpotifyAuth, Scopes } from 'react-spotify-auth'
+import 'react-spotify-auth/dist/index.css' // if using the included styles
+
+import Cookies from 'js-cookie';
+
 function App() {
+
+  // Give App() a state to store login, etc. information
 
   class WeatherForm extends React.Component {
     constructor(props) {
@@ -80,50 +87,178 @@ function App() {
             </label>
             <input type="submit" value="Submit" />
           </form>
-          <br />
           <section>
               <Map />
           </section>
+        </div>
+        
+      );
+    }
+  }
+
+  class LogoutButton extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {};
+      //this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(event)
+    {
+      axios({
+        method: "GET",
+        baseURL:"http://localhost:5000",
+        url:"/logout",
+      })
+      .then((response) => {
+        window.location = 'http://localhost:5000/logout'
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          }
+      });
+      alert('Logout handled');
+    }
+
+    render() {
+      return (
+        <button onClick={this.handleClick}>Logout</button>
+      )
+    }
+  }
+
+  class LoginButton extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {};
+    }
+
+    handleLogin(event) // Can probably simplify this to just be "window.location = 'http://localhost:5000/login'"
+    {
+      {/* window.location.replace('https://accounts.spotify.com/en/authorize?response_type=code&client_id=409b58756fd146ec81debb62c51eb887&redirect_uri=http://127.0.0.1:5000/callback&scope=ugc-image-upload user-read-email user-read-private user-top-read playlist-modify-public playlist-modify-private playlist-read-private') */}
+      axios({
+        method: "GET",
+        baseURL:"http://localhost:5000",
+        url:"/login",
+      })
+      .then((response) => {
+        const res = response.data
+        if(response.data.redirect == '/'){
+          window.location = ""
+        } else if(response.data.redirect == '/login') {
+          window.location = "/login"
+        } else if(response.data.redirect == 'https://accounts.spotify.com/en/authorize?response_type=code&client_id=409b58756fd146ec81debb62c51eb887&redirect_uri=http://127.0.0.1:5000/callback&scope=ugc-image-upload user-read-email user-read-private user-top-read playlist-modify-public playlist-modify-private playlist-read-private'){
+          window.location = "http://localhost:5000/login"
+        } else {
+          window.location = "http://localhost:5000/login"
+        }
+        alert(response.data);
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          }
+      });
+      alert('Login handled!');
+    }
+
+    render() {
+      return (
+        <button onClick={this.handleLogin}>Login</button>
+      )
+    }
+  }
+
+  class LogButton extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.handleLoginClick = this.handleLoginClick.bind(this);
+      this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      this.state = {isLoggedIn: false};
+      // const [token, setToken] = React.useState(Cookies.get("spotifyAuthToken"))
+    }
+  
+    handleLoginClick() {
+      this.setState({isLoggedIn: true}); // Paste login class handleClick() here
+    }
+  
+    handleLogoutClick() {
+      this.setState({isLoggedIn: false}); // Paste logout class handleClick() here
+      axios({
+        method: "GET",
+        baseURL:"http://localhost:5000",
+        url:"/logout",
+      })
+      .then((response) => {
+        window.location = 'http://localhost:5000/logout'
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          }
+      });
+      alert('Logout handled');
+    }
+  
+    render() {
+      const isLoggedIn = this.state.isLoggedIn;
+      let button;
+      if (isLoggedIn) {
+        button = <button onClick={this.handleLogoutClick}>Logout</button>;
+      } else {
+        button = <SpotifyAuth
+        redirectUri = 'http://127.0.0.1:5000/callback'
+        clientID='409b58756fd146ec81debb62c51eb887'
+        scopes={[Scopes.userReadPrivate, Scopes.userReadEmail]}
+        onAccessToken = {(token) => setToken(token)}/>
+      }
+  
+      return (
+        <div>
+          {button}
         </div>
       );
     }
   }
 
+  class PlaylistButton extends React.Component {
+    handleGenerate(){
+      alert("WIP")
+    }
+    render() {
+      return <button onClick={this.handleGenerate}>Generate playlist!</button>
+    }
+  }
    // new line start
-  const [profileData, setProfileData] = useState(null)
-  const wForm = <WeatherForm/>
 
-  function getData(lat, lon) {
-    axios({
-      method: "GET",
-      baseURL:"http://localhost:5000",
-      url:"/weather?lat="+lat+"&lon="+lon,
-    })
-    .then((response) => {
-      const res =response.data
-      setProfileData(({
-        profile_name: res.name,
-        about_me: res.shortForecast}))
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
-    //end of new line 
+  const wForm = <WeatherForm/>
+  const loginForm = <LoginButton/>
+  const logoutForm = <LogoutButton/>
+  const [token, setToken] = React.useState(Cookies.get("spotifyAuthToken"))
+  const logForm = <LogButton/>
+  const playlistButton = <PlaylistButton/>
 
   return (
     <div className="App">
       <header className="App-header">
         {/* new line start*/}
-        {wForm}
-        {/* <p>To get the weather forecast: </p><button onClick={() => getData("42.3061","-71.0589")}>Click me</button>
-        {profileData && <div>
-              <p>The forecast for {profileData.profile_name}</p>
-              <p>is {profileData.about_me}</p>
-            </div>
-        } */}
+        <p>Final login/Logout button here:</p>{logForm}
+        <section>
+          <Map />
+        </section>
+        {playlistButton}
+        <SpotifyAuth
+          redirectUri = 'http://127.0.0.1:5000/callback'
+          clientID='409b58756fd146ec81debb62c51eb887'
+          scopes={[Scopes.userReadPrivate, Scopes.userReadEmail]}
+          onAccessToken = {(token) => setToken(token)}
+        />
+        {logoutForm}
          {/* end of new line */}
       </header>
     </div>
@@ -131,3 +266,4 @@ function App() {
 }
 
 export default App;
+
