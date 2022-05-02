@@ -119,7 +119,6 @@ function App() {
           console.log(error.response.headers)
           }
       });
-      alert('Logout handled');
     }
 
     render() {
@@ -234,6 +233,41 @@ function App() {
       return <button onClick={this.handleGenerate}>Generate playlist!</button>
     }
   }
+
+  class OauthButton extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        args : window.location.pathname
+      };
+    }
+
+    handleOauth(event) // Can probably simplify this to just be "window.location = 'http://localhost:5000/login'"
+    {
+      {/* window.location.replace('https://accounts.spotify.com/en/authorize?response_type=code&client_id=409b58756fd146ec81debb62c51eb887&redirect_uri=http://127.0.0.1:5000/callback&scope=ugc-image-upload user-read-email user-read-private user-top-read playlist-modify-public playlist-modify-private playlist-read-private') */}
+      alert((window.location.hash).substring(1))
+      axios({
+        method: "GET",
+        baseURL:"http://localhost:5000",
+        url:"/generate_playlist?"+(window.location.hash).substring(1),
+      })
+      .then((response) => {
+        const res = response.data
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          }
+      });
+    }
+
+    render() {
+      return (
+        <button onClick={this.handleOauth}>Please God</button>
+      )
+    }
+  }
    // new line start
 
   const wForm = <WeatherForm/>
@@ -242,23 +276,27 @@ function App() {
   const [token, setToken] = React.useState(Cookies.get("spotifyAuthToken"))
   const logForm = <LogButton/>
   const playlistButton = <PlaylistButton/>
+  const spotPls = <OauthButton/>
 
   return (
     <div className="App">
       <header className="App-header">
         {/* new line start*/}
+        <h3>Day 111: All hope is fading and I haven't seen another person in weeks.</h3>
         <p>Final login/Logout button here:</p>{logForm}
         <section>
           <Map />
         </section>
-        {playlistButton}
         <SpotifyAuth
-          redirectUri = 'http://127.0.0.1:5000/callback'
+          // redirectUri = 'http://127.0.0.1:5000/callback'
+          redirectUri = 'http://127.0.0.1:3000/'
           clientID='409b58756fd146ec81debb62c51eb887'
-          scopes={[Scopes.userReadPrivate, Scopes.userReadEmail]}
+          scopes={[Scopes.userReadPrivate, Scopes.userReadEmail, Scopes.userTopRead, Scopes.playlistModifyPublic, Scopes.playlistModifyPrivate, Scopes.playlistReadPrivate, Scopes.ugcImageUpload]}
           onAccessToken = {(token) => setToken(token)}
         />
+        {playlistButton}
         {logoutForm}
+        {spotPls}
          {/* end of new line */}
       </header>
     </div>
