@@ -144,9 +144,9 @@ def generate_playlist():
     if token != None:
         #sentiment = redirect('http://127.0.0.1:5000/analysis')
         sentiment = .5
-        print(sentiment)
-        print('checkcheckcheck')
-        #spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
+        # print(sentiment)
+        # print('checkcheckcheck')
+        spotifyplaylist = spotify(CLIENT_ID, token, sentiment)
         #print (spotifyplaylist.final_return())
         return make_response('check')
     else:

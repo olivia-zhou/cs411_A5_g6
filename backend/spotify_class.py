@@ -54,7 +54,7 @@ class spotify:
         for i in seedGenres:
             seedGenresStr += i + ','
         seedGenresStr = seedGenresStr[0:-1]
-        print(seedGenresStr)
+        #print(seedGenresStr)
         the_url = "https://api.spotify.com/v1/recommendations?seed_genres={}&limit=50&target_valence={}&min_popularity=50&max_popularity=90&target_popularity=90".format(seedGenresStr, self.sentiment)
         # query_info = {
         #     'seed_genres': seedGenresStr,
