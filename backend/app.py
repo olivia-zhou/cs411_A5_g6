@@ -19,8 +19,8 @@ Test Endpoint
 def hello_world():
     return "<p>Hello, World!</p>"
 
-global_lat = 0
-global_long = 0
+global_lat = 40.730610
+global_long = -73.935242
 
 '''
 API Endpoint to return raw Weather Data based on geolocation
@@ -31,7 +31,7 @@ def get_weather():
     #lat = request.values.get("lat")
     #lon = request.values.get("lon")
     #print(lat, lon)
-    location_request = "https://api.weather.gov/points/" + global_lat + "," + global_long
+    location_request = "https://api.weather.gov/points/" + str(global_lat) + "," + str(global_long)
 
     #location_point = requests.get("https://api.weather.gov/gridpoints/LWX/96,70/forecast", headers={"User-Agent": "(test.com, test@test.com)"})
     
