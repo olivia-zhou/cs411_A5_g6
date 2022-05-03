@@ -15,10 +15,21 @@ Using the weather of a walk's destination to create a Spotify playlist using ana
 
 ### Use Flow:
 
-1) enter your destination
-2) login to Spotify by clicking the green button that says "continue with Spotify"
+*Burner Spotify account to generate playlists in*
+
+*email: cs411.A5.g6@gmail.com*
+
+*password: computerscience411!*
+
+1) login to Spotify by clicking the green button that says "continue with Spotify"
+2) enter your destination
 3) click the button that says "Generate Playlist!" in order to generate a playlist based on the weather
 4) check your spotify for your new weather playlist!
 5) when you are all set, you can either click the logout button in order to log out of spotify
 
 *you will be logged out after 60 minutes automatically, in case you forget to logout manually
+
+### Checking the DB for contents:
+*in mongoshell*
+use WeatherApp
+db.SpotifyAuthTokens.find()
