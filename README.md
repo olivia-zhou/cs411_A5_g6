@@ -15,5 +15,5 @@ Using weather and user input information for Watson sentiment analysis to create
 
 1) enter your destination
 2) login to Spotify by clicking the green button that says "continue with Spotify"
-3) click the button that says "Please God" in order to generate a playlist based on the weather
+3) click the button that says "Generate Playlist!" in order to generate a playlist based on the weather
 4) check your spotify for your new weather playlist!
