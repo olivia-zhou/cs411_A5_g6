@@ -28,10 +28,10 @@ API Endpoint to return raw Weather Data based on geolocation
 @app.route("/weather", methods=["GET"])
 def get_weather():
 
-    lat = request.values.get("lat")
-    lon = request.values.get("lon")
-    print(lat, lon)
-    location_request = "https://api.weather.gov/points/"+ lat + "," + lon
+    #lat = request.values.get("lat")
+    #lon = request.values.get("lon")
+    #print(lat, lon)
+    location_request = "https://api.weather.gov/points/" + global_lat + "," + global_long
 
     #location_point = requests.get("https://api.weather.gov/gridpoints/LWX/96,70/forecast", headers={"User-Agent": "(test.com, test@test.com)"})
     
@@ -53,7 +53,7 @@ API Endpoint to return raw Weather Data based on geolocation
 def update_coords():
     global_lat = request.values.get("lat")
     global_long = request.values.get("lon")
-    return
+    return 'success'
 
 @app.route("/analysis", methods = ["GET", "POST"])
 def analysis():

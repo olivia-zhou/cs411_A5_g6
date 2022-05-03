@@ -1,3 +1,4 @@
+import React, { useState, useRef } from 'react'
 import {
     Box,
     Button,
@@ -17,7 +18,7 @@ import {
     Autocomplete,
     DirectionsRenderer,
 } from '@react-google-maps/api'
-import React, { useRef, useState } from 'react'
+import axios from "axios";
 
 const center = { lat: 42.3497644, lng: -71.1041491}
 
@@ -31,7 +32,8 @@ function Map() {
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
-    const [latlng, setLatLng] = useState('')
+    const [lat, setLat] = useState('')
+    const [lng, setLng] = useState('')
     
     const originRef = useRef()
     const destiantionRef = useRef()
@@ -60,14 +62,31 @@ function Map() {
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
-        setLatLng(results.routes[0].legs[0].start_location)
+        setLat(results.routes[0].legs[0].end_location.lat().toString())
+        setLng(results.routes[0].legs[0].end_location.lng().toString())
+
+        axios({
+            methods:"GET",
+            baseURL:"http://localhost:5000",
+            url:"/update_coordinates",
+        })
+            .then((response) => {
+                const res = response.data
+                this.global_lat = res.lat
+                this.global_long = res.lng
+            }).catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+            }
+        });
     }
 
     function clearRoute() {
         setDirectionsResponse(null)
         setDistance('')
         setDuration('')
-        setLatLng(center)
         originRef.current.value = ''
         destiantionRef.current.value = ''
         panTo(center)
@@ -76,6 +95,8 @@ function Map() {
     function locate(){
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                setLat(position.coords.latitude)
+                setLng(position.coords.longitude)
                 map.panTo({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
@@ -83,6 +104,7 @@ function Map() {
             },
             () => null
         )
+        alert(lat)
     }
     
     return (
