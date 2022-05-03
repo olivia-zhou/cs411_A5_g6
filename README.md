@@ -31,5 +31,7 @@ Using the weather of a walk's destination to create a Spotify playlist using ana
 
 ### Checking the DB for contents:
 *in mongoshell*
+
 use WeatherApp
+
 db.SpotifyAuthTokens.find()
