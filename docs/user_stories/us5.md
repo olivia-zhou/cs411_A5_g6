@@ -1,4 +1,4 @@
-## 6. "as a logged-in user, I want to press the Generate Playlist button to gerenate a playlist for my destination"
+## 5. "as a logged-in user, I want to press the Generate Playlist button to gerenate a playlist for my destination"
 
 **Happy Path:** I, an authenticated user, have already searched for a destination as in Story 1 and have authenticated as in Story 2. After checking the displayed travel length, I decide to press the Generate Playlist button on the page. Our app then takes the inputted destination and weather and generates a playlist for this specific circumstance and displays it (Story 3) before using embedded Spotify features to add it to their acccount for audio playback on their device of choice.
 
