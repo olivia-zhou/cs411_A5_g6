@@ -76,6 +76,7 @@ SPOTIFY_ENDPOINT = 'https://api.spotify.com/v1/'
 CLIENT_ID = f'409b58756fd146ec81debb62c51eb887'
 CLIENT_URL = 'http://127.0.0.1'
 CLIENT_SECRET = key['client_secret']
+api_token = ''
 PORT = '5000'
 REDIRECT_URL = '{}:{}/callback'.format(CLIENT_URL, PORT)
 HOME = '{}:{}/'.format(CLIENT_URL, PORT)
@@ -88,8 +89,6 @@ def login():
     parameters = 'response_type=code&client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URL + '&scope=' + SCOPE
     authorize_url = 'https://accounts.spotify.com/en/authorize?' + parameters
     response = make_response(redirect(authorize_url))
-    response.set_cookie('cross-site-cookie', 'bar', samesite='None', secure=True)
-    response.headers.add('Set-Cookie','cross-site-cookie=bar; SameSite=None; Secure')
     return response
 
 @app.route('/callback')
@@ -99,9 +98,12 @@ def callback():
     else:
         code = request.args.get('code')
         token = get_token(code)
-        sentiment = 0.7
-        #spotifyinfo = spotify(CLIENT_ID, token, sentiment)
-    return make_response(token)
+    url = 'localhost:5000/tryit'
+    return redirect(url)
+
+@app.route('/try')
+def tryit():
+    return make_response('check')
 
 
 def get_token(code):
@@ -112,10 +114,10 @@ def get_token(code):
             'redirect_uri': REDIRECT_URL,
             'client_id': CLIENT_ID
         }
-    encoded_id = base64.b64encode(str.encode(CLIENT_ID)).decode()
-    encoded_secret = base64.b64decode(str.encode(CLIENT_SECRET)).decode()
+    auth = CLIENT_ID + ':' + CLIENT_SECRET
+    encoded = base64.b64encode(auth.encode('utf-8')).decode()
     header = {
-        'Authorization': 'Basic <{}:{}>'.format(encoded_id, encoded_secret),
+        'Authorization': 'Basic {}'.format(encoded),
         'Content-Type':'application/x-www-form-urlencoded'
         }
     token = requests.post(token_url, data = token_info, headers=header)
@@ -147,6 +149,14 @@ def refresh_token(refresh_token):
         scope = response['scope']
         expires_in = response["expires_in"]
     return access_token
+
+@app.route('/spotify_oauth')
+def spotify_oauth():
+    if token != None:
+        return str(token)
+    else:
+        return render_template('index.html', error = 'Token failure')
+    return make_response('bug check - delete later')
 
 @app.route('/generate_playlist')
 def generate_playlist():

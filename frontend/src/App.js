@@ -144,7 +144,8 @@ function App() {
       })
       .then((response) => {
         const res = response.data
-        if(response.data.redirect == '/'){
+        window.location = "http://localhost:5000/login"
+        /* if(response.data.redirect == '/'){
           window.location = ""
         } else if(response.data.redirect == '/login') {
           window.location = "/login"
@@ -152,7 +153,7 @@ function App() {
           window.location = "http://localhost:5000/login"
         } else {
           window.location = "http://localhost:5000/login"
-        }
+        } */
         alert(response.data);
       }).catch((error) => {
         if (error.response) {
@@ -294,6 +295,7 @@ function App() {
           scopes={[Scopes.userReadPrivate, Scopes.userReadEmail, Scopes.userTopRead, Scopes.playlistModifyPublic, Scopes.playlistModifyPrivate, Scopes.playlistReadPrivate, Scopes.ugcImageUpload]}
           onAccessToken = {(token) => setToken(token)}
         />
+        {loginForm}
         {playlistButton}
         {logoutForm}
         {spotPls}
