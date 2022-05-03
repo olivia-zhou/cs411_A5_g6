@@ -95,6 +95,6 @@ class spotify:
     def final_return(self):
         return self.playlist_url, self.playlist_id
 
-test = spotify(1, 
-'BQCk-so_iES8GpRC4RchdUGs2aHfiSdoZt7TOs_En1KGIJipboXyZ4wtRIDJHWU3iFFE8pPYUa03RpUVw2KbA6nLNXPoze3LDkN1fxlGcM_zTn--T6b3t77n5aIxNCIv0PMTe_pBoAMklnLXFjinCOy3tLChFekBcn5n60LqImuq3a0D7uzQz2Y7B7IwV3g-1OisIlAdrFpX_6dtPYMQ7IxIajSOQhqjIQSVLgI6Kv08gVHZ5xWcy5rh2TbSf7Jg-vPUN5nlpkJO2ntzmz-Ue8NR37QisBo3ZpsYa_g1-wfXHaF9XuVFQLW9Uo0LXO8OD4jLqM65THikL00Qs_a7DETgO1i3C91O5sHlnu8XJjChiZtxwH'
-, -.97)
+# test = spotify(1, 
+# 'BQCk-so_iES8GpRC4RchdUGs2aHfiSdoZt7TOs_En1KGIJipboXyZ4wtRIDJHWU3iFFE8pPYUa03RpUVw2KbA6nLNXPoze3LDkN1fxlGcM_zTn--T6b3t77n5aIxNCIv0PMTe_pBoAMklnLXFjinCOy3tLChFekBcn5n60LqImuq3a0D7uzQz2Y7B7IwV3g-1OisIlAdrFpX_6dtPYMQ7IxIajSOQhqjIQSVLgI6Kv08gVHZ5xWcy5rh2TbSf7Jg-vPUN5nlpkJO2ntzmz-Ue8NR37QisBo3ZpsYa_g1-wfXHaF9XuVFQLW9Uo0LXO8OD4jLqM65THikL00Qs_a7DETgO1i3C91O5sHlnu8XJjChiZtxwH'
+# , -.97)
