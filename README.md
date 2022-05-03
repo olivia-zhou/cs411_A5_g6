@@ -1,22 +1,24 @@
-# cs411_A5_g6
+# Weather Walk
 Section A5 group 6 CS411 project
+
 Justin Sayah, Bryce Freeman, Nathan Ho, Yvonne Wu, Olivia Zhou, Zizhuang Guo
 
-Using weather and user input information for Watson sentiment analysis to create a Spotify playlist for a particular walk
+Using the weather of a walk's destination to create a Spotify playlist using analysis from IBM's Watson
 
-# To Peers BEFORE WORKING:
+### Setting up:
 
-1) Activate Python Virtual Env Before Working --> Look it up based on what OS you are running
-    For mac/unix users: ```python3 -m venv env```
-    For windows users: ```py -m venv env```
+1) clone repo
+2) create a new virtual environment and activate it
+3) run bash ./update_reqs.sh in order to get the required packages
+4) read the Mongo installation docs under the doc folder and install the necessary MongoDB packages
+5) run bash ./run_backend.sh and bash.run/run_frontend.sh in a GitBash terminal to start the frontend and backend
 
-    For mac/unix users: ```source env/bin/activate```
-    For windows users in git bash:  ```. env\Scripts\activate```
+### Use Flow:
 
-2) Run ```bash ./update_reqs.sh``` to get all dependencies and requirements for python and node
+1) enter your destination
+2) login to Spotify by clicking the green button that says "continue with Spotify"
+3) click the button that says "Generate Playlist!" in order to generate a playlist based on the weather
+4) check your spotify for your new weather playlist!
+5) when you are all set, you can either click the logout button in order to log out of spotify
 
-3) Run ```bash ./run_backend.sh``` and ```bash ./run_frontend.sh``` in separate terminals to run the frontend and backend simultaneously
-
-NOTES
-- Your ports might need to be adjusted based on what flask runs on and what react runs on, check your console at runtime
-- WINDOWS USERS: Don't run the shell scripts from Powershell, use git bash plz
+*you will be logged out after 60 minutes automatically, in case you forget to logout manually
