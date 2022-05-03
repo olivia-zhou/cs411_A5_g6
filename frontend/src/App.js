@@ -154,7 +154,7 @@ function App() {
         } else {
           window.location = "http://localhost:5000/login"
         } */
-        alert(response.data);
+        /* alert(response.data); */
       }).catch((error) => {
         if (error.response) {
           console.log(error.response)
@@ -162,7 +162,7 @@ function App() {
           console.log(error.response.headers)
           }
       });
-      alert('Login handled!');
+      /* alert('Login handled!'); */
     }
 
     render() {
@@ -202,7 +202,7 @@ function App() {
           console.log(error.response.headers)
           }
       });
-      alert('Logout handled');
+      /* alert('Logout handled'); */
     }
   
     render() {
@@ -228,7 +228,7 @@ function App() {
 
   class PlaylistButton extends React.Component {
     handleGenerate(){
-      alert("WIP")
+      /* alert("WIP") */
     }
     render() {
       return <button onClick={this.handleGenerate}>Generate playlist!</button>
@@ -246,7 +246,7 @@ function App() {
     handleOauth(event) // Can probably simplify this to just be "window.location = 'http://localhost:5000/login'"
     {
       {/* window.location.replace('https://accounts.spotify.com/en/authorize?response_type=code&client_id=409b58756fd146ec81debb62c51eb887&redirect_uri=http://127.0.0.1:5000/callback&scope=ugc-image-upload user-read-email user-read-private user-top-read playlist-modify-public playlist-modify-private playlist-read-private') */}
-      alert((window.location.hash).substring(1))
+      alert("Generated playlist. Check your Spotify account!")
       axios({
         method: "GET",
         baseURL:"http://localhost:5000",
