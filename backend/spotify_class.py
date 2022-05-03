@@ -4,6 +4,8 @@ Spotify class
 from flask import Flask, request, redirect, render_template
 import requests
 import json, random
+import time
+from MongoDatabaseConnection import MongoDatabaseConnection
 
 
 
@@ -14,13 +16,14 @@ class spotify:
         #sentiment is passed in range of -1 to 1, but must be converted to range 0 to 1
         self.sentiment = (sentiment + 1)/2
         #self.country, self.username, self.email = self.get_me()
-        self.username = self.get_me()
+        self.username, self.email = self.get_me()
 
         #these need to be replaced with one function that does everything
         self.playlist_url, self.playlist_id = self.create_empty_playlist()
         self.populate_playlist()
 
         self.song_list = []
+        self.add_token()
         # self.short_id = self.add_music()
     
     def get_me(self):
@@ -30,8 +33,8 @@ class spotify:
         #print(response)
         #country = response['country']
         name = response['id']
-        #email= response['email']
-        return name
+        email= response['email']
+        return name, email
     
     def create_empty_playlist(self):
         playlist_url = 'https://api.spotify.com/v1/users/{}/playlists'.format(self.username)
@@ -95,6 +98,21 @@ class spotify:
     def final_return(self):
         return self.playlist_url, self.playlist_id
 
-test = spotify(1, 
-'BQDKx8R7GC5ktEzU3RED5nVauE7JkKjdxAjDUX23iFsW1Coypvua8xM5GL9EhllVPtw_oPlqZih4-OB244WUtqQsAnvk0LYzwePR1SecVpKLsObF0eRYwgK8hU2OiuNLE8fTWN7Zmat_dYqJ3t9XPxFEpzkj9W3lt-XX2WUwvxPRWP3W7R2OFTTAsthtzxTvePzYWQBJxRBZU_3Sdhf_U7Es8URjQq7nenkNjk9s-BgnRwFbySBJFb4z_xGc1bXq'
-, -.97)
+    def add_token(self):
+        db_connection = MongoDatabaseConnection()
+        db_connection.open()
+
+        uuid = self.username
+        email = self.email
+        token = self.token
+        create_timestamp = time.time()
+        expire_timestamp = create_timestamp + 60 * 60
+
+        db_connection.add_token(uuid, email, token, create_timestamp, expire_timestamp)
+
+        db_connection.close()
+        return
+
+# test = spotify(1, 
+# 'BQDKx8R7GC5ktEzU3RED5nVauE7JkKjdxAjDUX23iFsW1Coypvua8xM5GL9EhllVPtw_oPlqZih4-OB244WUtqQsAnvk0LYzwePR1SecVpKLsObF0eRYwgK8hU2OiuNLE8fTWN7Zmat_dYqJ3t9XPxFEpzkj9W3lt-XX2WUwvxPRWP3W7R2OFTTAsthtzxTvePzYWQBJxRBZU_3Sdhf_U7Es8URjQq7nenkNjk9s-BgnRwFbySBJFb4z_xGc1bXq'
+# , -.97)
