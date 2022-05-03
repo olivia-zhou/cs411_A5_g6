@@ -19,3 +19,6 @@ Using the weather of a walk's destination to create a Spotify playlist using ana
 2) login to Spotify by clicking the green button that says "continue with Spotify"
 3) click the button that says "Generate Playlist!" in order to generate a playlist based on the weather
 4) check your spotify for your new weather playlist!
+5) when you are all set, you can either click the logout button in order to log out of spotify
+
+*you will be logged out after 60 minutes automatically, in case you forget to logout manually
