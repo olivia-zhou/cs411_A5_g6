@@ -265,7 +265,7 @@ function App() {
 
     render() {
       return (
-        <button onClick={this.handleOauth}>Please God</button>
+        <button onClick={this.handleOauth}>Generate Playlist!</button>
       )
     }
   }
@@ -283,8 +283,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* new line start*/}
-        <h3>Day 111: All hope is fading and I haven't seen another person in weeks.</h3>
-        <p>Final login/Logout button here:</p>{logForm}
+        <h3>WeatherWalk</h3>
         <section>
           <Map />
         </section>
@@ -295,8 +294,6 @@ function App() {
           scopes={[Scopes.userReadPrivate, Scopes.userReadEmail, Scopes.userTopRead, Scopes.playlistModifyPublic, Scopes.playlistModifyPrivate, Scopes.playlistReadPrivate, Scopes.ugcImageUpload]}
           onAccessToken = {(token) => setToken(token)}
         />
-        {loginForm}
-        {playlistButton}
         {logoutForm}
         {spotPls}
          {/* end of new line */}

@@ -19,12 +19,15 @@ import {
     DirectionsRenderer,
 } from '@react-google-maps/api'
 import axios from "axios";
+import { jsx } from '@emotion/react';
+import { keyBy } from 'lodash';
 
 const center = { lat: 42.3497644, lng: -71.1041491}
+const jsonKey = require('./gmaps.json');
 
 function Map() {
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: jsonKey.key,
         libraries: ['places']
     })
 

@@ -32,3 +32,4 @@ yarn-error.log*
 creds.json
 watsoncreds.json
 spotify_key.json
+gmaps.json

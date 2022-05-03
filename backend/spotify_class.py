@@ -29,7 +29,7 @@ class spotify:
         response = userinfo.json()
         #print(response)
         #country = response['country']
-        name = response['display_name']
+        name = response['id']
         #email= response['email']
         return name
     
