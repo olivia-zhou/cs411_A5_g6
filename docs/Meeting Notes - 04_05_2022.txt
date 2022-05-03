@@ -1,0 +1,44 @@
+﻿Lab Demo (Due Friday, April 8)
+* 10 Minute Slot for each team
+* Explain choice of frameworks
+   * Flask
+   * Django?
+* Demo use of your API’s (either through Postman or on backend)
+   * Google Maps (maybe)
+   * Spotify
+   * Watson sentiment analysis
+   * Weather API (e.g., NOAA)
+* A few questions from TA
+
+
+* Work assignments:
+   * Backend
+   * Frontend
+   * DB
+
+
+TA3 (Due Sunday, April 10)
+
+
+“Here are the [prototype] requirements:
+
+
+1. Display a web form to allow the user to search for an item from the API feed. For example, if you are using the wine.com API, you might have a form that allows the user to search for the name of a particular wine. 
+
+
+2. Make a call to your backend code, passing the selection from the form. Your backend code will then call one of your APIs with the search term passed in from the form. 
+
+
+3. Parse and display the results of the API call. If the result is a JSON object, for example, parse it out and display the data on your page.”
+
+
+        “Deliverables: 
+
+
+1. A link to your team’s github repo containing your prototype code. Place it in a folder called ‘prototype’. Only one team member needs to submit the link. 
+
+
+2. A short video demonstrating your prototype. This video only needs to be a minute or so long. Include the video in your github repo. 
+
+
+3. A document explaining why you chose the technology stack that you are demonstrating; I’d like the team to consider a minimum of two technology stacks (Node, Django, etc). Describe the process and reasoning the team used to select the stack, and explain why you chose it over the other. The doc should be added to your ‘docs’ folder on github.”
