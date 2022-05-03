@@ -19,6 +19,9 @@ Test Endpoint
 def hello_world():
     return "<p>Hello, World!</p>"
 
+global_lat = 0
+global_long = 0
+
 '''
 API Endpoint to return raw Weather Data based on geolocation
 '''
@@ -42,6 +45,15 @@ def get_weather():
     #print(location_data["properties"])
     most_recent_forecast = location_data["properties"]["periods"][0]
     return most_recent_forecast
+
+'''
+API Endpoint to return raw Weather Data based on geolocation
+'''
+@app.route("/update_coordinates", methods=["GET"])
+def update_coords():
+    global_lat = request.values.get("lat")
+    global_long = request.values.get("lon")
+    return
 
 @app.route("/analysis", methods = ["GET", "POST"])
 def analysis():
