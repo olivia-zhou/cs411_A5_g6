@@ -107,7 +107,6 @@ function Map() {
             },
             () => null
         )
-        alert(lat)
     }
     
     return (
